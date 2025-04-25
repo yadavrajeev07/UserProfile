@@ -2,6 +2,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
+<<<<<<< HEAD:DockerFile
 
 # Use SDK image to build the app
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
@@ -20,4 +21,6 @@ RUN dotnet publish "userprofileapp.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+=======
+>>>>>>> 1d235de8d1b71deaa46aff6a472d82a05c676bce:Dockerfile
 ENTRYPOINT ["dotnet", "userprofileapp.dll"]
