@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: userprofileapp
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
