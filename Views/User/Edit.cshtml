@@ -1,0 +1,139 @@
+@model userprofileapp.Models.User
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit User</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            padding: 40px;
+        }
+
+        .form-container {
+            background: #fff;
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0069d9;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Edit User</h2>
+        <form method="post" asp-action="Edit" asp-controller="User">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <input type="text" asp-for="FirstName" placeholder="First Name" required />
+            <input type="text" asp-for="LastName" placeholder="Last Name" required />
+
+            <select asp-for="Country" id="country" required>
+                <option value="">--Select Country--</option>
+            </select>
+
+            <select asp-for="State" id="state" required>
+                <option value="">--Select State--</option>
+            </select>
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <script>
+        async function loadCountries(selectedCountry) {
+            const countryDropdown = document.getElementById("country");
+            const res = await fetch("https://countriesnow.space/api/v0.1/countries/positions");
+            const data = await res.json();
+
+            data.data.forEach(country => {
+                const opt = document.createElement("option");
+                opt.value = country.name;
+                opt.text = country.name;
+                if (country.name === selectedCountry) {
+                    opt.selected = true;
+                }
+                countryDropdown.appendChild(opt);
+            });
+        }
+
+        async function loadStates(countryName, selectedState) {
+            const stateDropdown = document.getElementById("state");
+            stateDropdown.innerHTML = '<option value="">--Select State--</option>';
+
+            const res = await fetch("https://countriesnow.space/api/v0.1/countries/states", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ country: countryName })
+            });
+
+            const data = await res.json();
+
+            if (data.data && data.data.states) {
+                data.data.states.forEach(state => {
+                    const opt = document.createElement("option");
+                    opt.value = state.name;
+                    opt.text = state.name;
+                    if (state.name === selectedState) {
+                        opt.selected = true;
+                    }
+                    stateDropdown.appendChild(opt);
+                });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const selectedCountry = "@Model.Country";
+            const selectedState = "@Model.State";
+
+            loadCountries(selectedCountry).then(() => {
+                if (selectedCountry) {
+                    loadStates(selectedCountry, selectedState);
+                }
+            });
+        });
+
+        document.getElementById("country").addEventListener("change", function () {
+            const selected = this.value;
+            if (selected) {
+                loadStates(selected);
+            }
+        });
+    </script>
+</body>
+</html>
