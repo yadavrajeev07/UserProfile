@@ -1,4 +1,4 @@
-# Use the official image from Microsoft
+# Use the official image from Microsoft for the runtime
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
@@ -12,6 +12,7 @@ COPY . .
 WORKDIR "/src/userprofileapp"
 RUN dotnet build "userprofileapp.csproj" -c Release -o /app/build
 
+# Publish the app
 FROM build AS publish
 RUN dotnet publish "userprofileapp.csproj" -c Release -o /app/publish
 
