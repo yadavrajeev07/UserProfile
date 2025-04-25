@@ -1,14 +1,22 @@
-# Stage 1: Build
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# Use the official image from Microsoft
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-
-COPY . .
-RUN dotnet publish -c Release -o out
-
-# Stage 2: Run
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
-WORKDIR /app
-COPY --from=build /app/out .
-
 EXPOSE 80
-ENTRYPOINT ["dotnet", "UserProfileApp.dll"]
+
+# Use SDK image to build the app
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["userprofileapp/userprofileapp.csproj", "userprofileapp/"]
+RUN dotnet restore "userprofileapp/userprofileapp.csproj"
+COPY . .
+WORKDIR "/src/userprofileapp"
+RUN dotnet build "userprofileapp.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "userprofileapp.csproj" -c Release -o /app/publish
+
+# Copy build output to the final image
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "userprofileapp.dll"]

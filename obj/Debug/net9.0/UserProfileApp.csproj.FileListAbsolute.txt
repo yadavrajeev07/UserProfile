@@ -103,3 +103,10 @@ C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\obj\Debug\net9.0\scop
 C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\obj\Debug\net9.0\scopedcss\projectbundle\UserProfileApp.bundle.scp.css
 C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\obj\Debug\net9.0\compressed\kkkhqfw9wf-numkr63sww.gz
 C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\obj\Debug\net9.0\compressed\q589mbfev0-numkr63sww.gz
+C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\bin\Debug\net9.0\publish\web.config
+C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\bin\Debug\net9.0\publish\appsettings.Development.json
+C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\bin\Debug\net9.0\publish\appsettings.json
+C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\bin\Debug\net9.0\publish\UserProfileApp.deps.json
+C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\bin\Debug\net9.0\publish\UserProfileApp.runtimeconfig.json
+C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\bin\Debug\net9.0\publish\UserProfileApp.staticwebassets.endpoints.json
+C:\Users\rajee\OneDrive\Desktop\.net pro2.0\userprofileapp\obj\Debug\net9.0\UserProfileApp.sourcelink.json
